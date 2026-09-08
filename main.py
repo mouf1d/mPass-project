@@ -152,11 +152,7 @@ class Checker:
 
 
 
-p = Password("azerty123")
-pa = Password("Tr9!kL2@pQ7#xM!")
-c = Checker()
 
-print(c.check_dictionary(p))
 
 
 
