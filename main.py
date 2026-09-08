@@ -134,7 +134,13 @@ class Checker:
 
         return False
 
-
+    def check_dictionary(self,password):
+        with open("wordlist.txt", "r") as lines:
+            for line in lines:
+                line =line.strip()
+                if password.password == line:
+                    return True
+        return False
 
            
             
@@ -143,11 +149,11 @@ class Checker:
 
 
 
-p = Password("ababab")
+p = Password("azerty123")
 pa = Password("Tr9!kL2@pQ7#xM!")
 c = Checker()
 
-print(c.check_repeated_patterns(p))
+print(c.check_dictionary(p))
 
 
 
