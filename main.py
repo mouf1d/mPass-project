@@ -87,7 +87,8 @@ class Checker:
     # il y a une sequence quand 3 caracteres se suivent (exemple: 123, abc, cba)
 
         for i in range(len(password.password) - 2):
-
+            if password.password[i] not in ALPHABET_POSITION or password.password[i + 1] not in ALPHABET_POSITION or password.password[i + 2] not in ALPHABET_POSITION:
+                continue
             if ALPHABET_POSITION[password.password[i + 1]] == ALPHABET_POSITION[password.password[i]] + 1:
                 if ALPHABET_POSITION[password.password[i + 2]] == ALPHABET_POSITION[password.password[i + 1]] + 1:
                     return True
@@ -99,39 +100,38 @@ class Checker:
         return False
 
     def check_repeated_patterns(self,password):
+        # cherche les motifs qui se repetent tout en se suivant
 
-    # cherche les motifs qui se repetent tout en se suivant
         repeated_patterns = {}
         liste = []
         n = password.len
-
-        for i in range(2,int(n/2)):
+        for i in range(2,int(n/2)+1):
             if n%i == 0:
                 liste.append(i)
-        
-        for i in liste:
-            j = int(n/i)
-            p = password.password
-            
-            while j>0:
-                m = len(p)
-                pattern = p[:i]
-                if pattern == p[i:i*2]:
-                    if pattern not in repeated_patterns.keys():
-                        repeated_patterns[pattern] = 1
-                        j -= 1
-                        p = p[:m-i]
+
+        for k in range(n):
+            for i in liste:
+                j = int((n-k)/i)
+                p = password.password[k:]
+
+                while j>0:
+                    m = len(p)
+                    pattern = p[:i]
+                    if pattern == p[i:i*2]:
+                        if pattern not in repeated_patterns.keys():
+                            repeated_patterns[pattern] = 1
+                            j -= 1
+                            p = p[:m-i]
+                        else:
+                            repeated_patterns[pattern] += 1
+                            j -= 1
+                            p = p[:m-i]
                     else:
-                        repeated_patterns[pattern] += 1
                         j -= 1
                         p = p[:m-i]
-                else:
-                    j -= 1
-                    p = p[:m-i]
 
         if repeated_patterns:
             return True
-
         return False
 
     def check_dictionary(self,password):
@@ -144,6 +144,12 @@ class Checker:
                     return True
                 
         return False
+
+
+        
+        
+
+
 
         
             
