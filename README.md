@@ -140,12 +140,6 @@ mPass/
 ├── .gitignore
 └── README.md
 
-## Technologies
-
-- Python 3
-- Object-Oriented Programming
-- Git / GitHub
-
 ## Disclaimer
 
 mPass is an educational project. The score is a custom scoring system created for this project and is not an official measure of password security.
@@ -156,6 +150,5 @@ The entropy calculation is theoretical and does not account for all real-world p
 
 The core business logic of mPass was designed and implemented by me, including the password analysis methods, entropy calculation, pattern detection, dictionary detection and scoring system.
 
-I used AI assistance mainly for the CLI interface, development guidance and documentation.
+I used AI assistance mainly for the CLI interface and documentation.
 
-This README.md was written with the assistance of AI.
