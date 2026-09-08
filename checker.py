@@ -1,4 +1,5 @@
 import math
+import os
 ALPHABET_MIN = "abcdefghijklmnopqrstuvwxyz" #26
 ALPHABET_MAJ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" #26
 CHIFFRES = "0123456789" #10
@@ -130,7 +131,7 @@ class Checker:
         return False
 
     def check_dictionary(self,password):
-        with open("wordlist.txt", "r") as lines:
+        with open(os.path.join(os.path.dirname(__file__), "wordlist.txt"), "r") as lines:
             for line in lines:
                 line =line.strip()
                 if password.password == line:
