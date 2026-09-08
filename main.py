@@ -140,9 +140,12 @@ class Checker:
                 line =line.strip()
                 if password.password == line:
                     return True
+                if line in password.password:
+                    return True
+                
         return False
 
-           
+        
             
             
 
