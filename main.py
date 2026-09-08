@@ -83,6 +83,7 @@ class Checker:
         return l[-1]
 
     def check_sequences(self, password):
+
     # il y a une sequence quand 3 caracteres se suivent (exemple: 123, abc, cba)
 
         for i in range(len(password.password) - 2):
@@ -98,24 +99,57 @@ class Checker:
         return False
 
     def check_repeated_patterns(self,password):
+
+    # cherche les motifs qui se repetent tout en se suivant
+        repeated_patterns = {}
         liste = []
-        repeated_patterns = []
         n = password.len
+
         for i in range(2,int(n/2)):
             if n%i == 0:
                 liste.append(i)
+        
         for i in liste:
-            pattern = password.password[:i]
+            j = int(n/i)
+            p = password.password
+            
+            while j>0:
+                m = len(p)
+                pattern = p[:i]
+                print(pattern)
+                if pattern == p[i:i*2]:
+                    if pattern not in repeated_patterns.keys():
+                        repeated_patterns[pattern] = 1
+                        j -= 1
+                        p = p[:m-i]
+                    else:
+                        repeated_patterns[pattern] += 1
+                        j -= 1
+                        p = p[:m-i]
+                else:
+                    j -= 1
+                    p = p[:m-i]
+
+        if repeated_patterns:
+            return True
+
+        return False
+
+
+
+           
             
             
 
 
 
-    
-p = Password("abcabcabc")
+
+p = Password("ababab")
 pa = Password("Tr9!kL2@pQ7#xM!")
 c = Checker()
 
 print(c.check_repeated_patterns(p))
+
+
 
 
