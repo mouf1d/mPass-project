@@ -116,7 +116,6 @@ class Checker:
             while j>0:
                 m = len(p)
                 pattern = p[:i]
-                print(pattern)
                 if pattern == p[i:i*2]:
                     if pattern not in repeated_patterns.keys():
                         repeated_patterns[pattern] = 1
