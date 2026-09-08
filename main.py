@@ -22,6 +22,8 @@ ALPHABET_POSITION = {
 
 class Password: 
     def __init__(self,password):
+        if password.strip() == "":
+            raise ValueError("Le mot de passe ne peut pas être vide.")
         self.password = password
         self.len = len(password)
 
@@ -145,10 +147,88 @@ class Checker:
                 
         return False
 
+    def calculer_score(self,password):
+        score = 0
 
-        
-        
+        # notation en fonction de la longueur du mot de passe
+        if self.check_length(password) < 8:
+            pass
+        elif self.check_length(password) >= 8 and self.check_length(password) <= 11:
+            score += 5
+        elif self.check_length(password) >= 12 and self.check_length(password) <= 15:
+            score += 10
+        elif self.check_length(password) >= 16 and self.check_length(password) <= 19:
+            score += 15
+        elif self.check_length(password) >= 20:
+            score += 20
 
+        # notation en fonction de la diversité des caractères
+        diversite = self.check_caracteres_diff(password) / self.check_length(password)
+        if diversite < 0.30:
+            pass
+        elif diversite >= 0.30 and diversite < 0.50:
+            score += 5
+        elif diversite >= 0.50 and diversite < 0.70:
+            score += 9
+        elif diversite >= 0.70 and diversite < 0.90:
+            score += 12
+        elif diversite >= 0.90:
+            score += 15
+
+        # notation en fonction des classes de caractères
+        classes = self.check_caracteres_classes(password)
+        if classes == 26 or classes == 10 or classes == 32:
+            score += 3
+        elif classes == 36 or classes == 42 or classes == 58:
+            score += 7
+        elif classes == 62 or classes == 68 or classes == 84:
+            score += 11
+        elif classes == 94:
+            score += 15
+
+        # notation en fonction de l'entropie
+        entropy = self.check_entropy(password)
+        if entropy < 40:
+            pass
+        elif entropy >= 40 and entropy < 60:
+            score += 10
+        elif entropy >= 60 and entropy < 80:
+            score += 20
+        elif entropy >= 80 and entropy < 100:
+            score += 25
+        elif entropy >= 100:
+            score += 30
+
+        # notation en fonction des caractères répétés
+        repetition = self.check_repeated_char(password) / self.check_length(password)
+        if repetition <= 0.20:
+            score += 20
+        elif repetition > 0.20 and repetition <= 0.30:
+            score += 14
+        elif repetition > 0.30 and repetition <= 0.40:
+            score += 8
+        elif repetition > 0.40:
+            pass
+
+        # malus en cas de séquence
+        if self.check_sequences(password):
+            score -= 10
+
+        # malus en cas de motifs répétés
+        if self.check_repeated_patterns(password):
+            score -= 10
+
+        # malus en cas de présence dans le dictionnaire
+        if self.check_dictionary(password):
+            score -= 20
+
+        if score < 0:
+            score = 0
+        elif score > 100:
+            score = 100
+
+        return score
+        
 
 
         
